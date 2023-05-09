@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Sock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class SockController
@@ -52,15 +54,20 @@ class SockController extends Controller
      */
     public function store(Request $request)
     {
+        
         $sock = Sock::create($request->all());
-        $sock['uuid'] = (string) Str::uuid();
 
         if($request->hasFile('sock_image')){
         
-         
-            $sock['sock_image'] = $request->file('sock_image')->getClientOriginalName();
-            $request->file('sock_image')->storeAs('folder_socks', $sock['sock_image']);
-          
+            $imageName = $request->file('sock_image')->getClientOriginalName();
+            $sock['image'] = $imageName;
+
+            $sock->save();
+        
+            $path = $request->file('sock_image')->storeAs(
+                '/public', $imageName
+            );
+            
         }
         request()->validate(Sock::$rules);
 

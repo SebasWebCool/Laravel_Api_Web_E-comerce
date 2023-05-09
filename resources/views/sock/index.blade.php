@@ -58,14 +58,18 @@
 											<td>{{ $sock->price }}</td>
 											<td>{{ $sock->color }}</td>
 											<td>{{ $sock->size }}</td>
-											<td>{{ $sock->sku }}</td>
-											<td>{{ $sock->image }}</td>
+											<td>{{ $sock->sku }}</td> 
+											<td>{{ $sock->image }}
+                                                {{-- <img src="{{asset("storage/".$sock->image)}}" alt="hola"> --}}
+                                            </td>
+
 											<td>{{ $sock->stock }}</td>
 
                                             <td>
                                                 <form action="{{ route('socks.destroy',$sock->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('socks.show',$sock->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('socks.edit',$sock->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-info text-white" target="_blank" href="{{asset("storage/".$sock->image)}}" ><i class="fa fa-fw fa-edit "></i> Show Image</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
